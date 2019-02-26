@@ -71,7 +71,7 @@ public class ModeloReservasAulas {
 		profesores.borrar(profesor);
 	}
 	
-	public Reserva[] getReservas() {
+	public List<Reserva> getReservas() {
 		return reservas.getReservas();
 	}
 	
@@ -79,7 +79,7 @@ public class ModeloReservasAulas {
 		return reservas.getNumReservas();
 	}
 	
-	public String[] representarReservas() {
+	public List<String> representarReservas() {
 		return reservas.representar();
 	}
 	
@@ -95,15 +95,15 @@ public class ModeloReservasAulas {
 		reservas.borrar(reserva);
 	}
 	
-	public Reserva[] getReservasAula (Aula aula) {
+	public List<Reserva> getReservasAula (Aula aula) {
 		return reservas.getReservasAula(aula);
 	}
 	
-	public Reserva[] getReservaProfesor (Profesor profesor) {
+	public List<Reserva> getReservaProfesor (Profesor profesor) {
 		return reservas.getReservasProfesor(profesor);
 	}
 	
-	public Reserva[] getReservaPermanencia (Permanencia permanencia) {
+	public List<Reserva> getReservaPermanencia (Permanencia permanencia) {
 		return reservas.getReservasPermanencia(permanencia);
 	}
 	
