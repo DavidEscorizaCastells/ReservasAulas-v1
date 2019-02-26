@@ -47,7 +47,7 @@ public class ModeloReservasAulas {
 		aulas.borrar(aula);
 	}
 	
-	public Profesor[] getProfesores() {
+	public List<Profesor> getProfesores() {
 		return profesores.getProfesores();
 	}
 	
@@ -55,7 +55,7 @@ public class ModeloReservasAulas {
 		return profesores.getNumProfesores();
 	}
 	
-	public String[] representarProfesores() {
+	public List<String> representarProfesores() {
 		return profesores.representar();
 	}
 	

@@ -11,7 +11,7 @@ public class Aulas {
 	private List<Aula>aulas;
 	
 	public Aulas() {
-		aulas=new ArrayList<Aula>();
+		aulas=new ArrayList<>();
 	}
 	
 	public Aulas(Aulas otrasAulas) {

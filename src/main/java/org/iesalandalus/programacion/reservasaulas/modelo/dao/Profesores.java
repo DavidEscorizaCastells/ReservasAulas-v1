@@ -1,17 +1,17 @@
 package org.iesalandalus.programacion.reservasaulas.modelo.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.reservasaulas.modelo.dominio.Profesor;
 
 public class Profesores {
-	private static final int MAX_PROFESORES=20;
-	private Profesor[] profesores;
-	private int numProfesores;
+	private List<Profesor> profesores;
 
 	public Profesores() {
-		profesores=new Profesor[MAX_PROFESORES];
-		numProfesores=0;
+		profesores=new ArrayList<>();
 	}
 
 	public Profesores(Profesores otrosProfesores) {
@@ -25,95 +25,55 @@ public class Profesores {
 		this.profesores=copiaProfundaProfesores(profesores.profesores);	
 	}
 	
-	private Profesor[] copiaProfundaProfesores (Profesor[] profesores) {
-		Profesor[] otrosProfesores=new Profesor[MAX_PROFESORES];
-		for (int i=0;i<MAX_PROFESORES && profesores[i]!=null ;i++) {
-			otrosProfesores[i]=new Profesor(profesores[i]);
+	private List<Profesor> copiaProfundaProfesores(List<Profesor> profesores) {
+		List<Profesor> otrosProfesores = new ArrayList<>();
+		for (Profesor profesor: profesores) {
+			otrosProfesores.add(new Profesor(profesor));
 		}
 		return otrosProfesores;
 	}
 	
-	public Profesor[] getProfesores() {
+	public List<Profesor> getProfesores() {
 		return copiaProfundaProfesores(profesores);
 	}
 	
 	public int getNumProfesores() {
-		return numProfesores;
+		return profesores.size();
 	}
 	
 	public void insertar(Profesor profesor) throws OperationNotSupportedException {
 		if (profesor==null)
 			throw new IllegalArgumentException ("No se puede insertar un profesor nulo.");
 		
-		int indice = buscarIndiceProfesor(profesor);
-		if (!indiceNoSuperaTamano(indice)) {
-			profesores[indice] = profesor;
-			numProfesores++;
-		} else {
-			if (indiceNoSuperaCapacidad(indice)) {
-				throw new OperationNotSupportedException("El profesor ya existe.");
-			} else {
-				throw new OperationNotSupportedException("No se aceptan más profesores.");
-			}
+		if (profesores.contains(profesor)) {
+			throw new OperationNotSupportedException("El profesor ya existe.");
 		}
-	}
-	
-	private int buscarIndiceProfesor(Profesor profesor) {
-		int indice=0;
-		boolean profesorEncontrado = false;
-		while (indiceNoSuperaTamano(indice) && !profesorEncontrado) {
-			if (profesores[indice].equals(profesor)) {
-				profesorEncontrado = true;
-			} else {
-				indice++;
-			}
-		}
-		return indice;
-	}
-	
-	private boolean indiceNoSuperaTamano(int indice) {
-		return indice<numProfesores;
-	}
-	
-	private boolean indiceNoSuperaCapacidad(int indice) {
-		return indice<MAX_PROFESORES;
+		profesores.add(new Profesor(profesor));
 	}
 	
 	public Profesor buscar(Profesor profesor) {
-		int indice = 0;
-		indice = buscarIndiceProfesor(profesor);
-		if (indiceNoSuperaTamano(indice)) {
-			return profesores[indice];
+		int indice = profesores.indexOf(profesor);
+		if (indice != -1) {
+			return new Profesor(profesores.get(indice));
 		} else {
 			return null;
-		}	
+		}
 	}
 	
 	public void borrar(Profesor profesor) throws OperationNotSupportedException {
-		if (profesor==null)
-			throw new IllegalArgumentException ("No se puede borrar un profesor nulo.");
-		
-		int indice = buscarIndiceProfesor(profesor);
-		if (indiceNoSuperaTamano(indice)) {
-			desplazarUnaPosicionHaciaIzquierda(indice);
+		if (profesor == null) {
+			throw new IllegalArgumentException("No se puede borrar un profesor nulo.");
 		}
-		else {
+		if (!profesores.remove(profesor)) {
 			throw new OperationNotSupportedException("El profesor a borrar no existe.");
 		}
 	}
 	
-	private void desplazarUnaPosicionHaciaIzquierda (int indice) {
-		for (int i = indice; i < numProfesores - 1; i++) {
-			profesores[i] = profesores[i+1];
-		}
-		profesores[numProfesores] = null;
-		numProfesores--;
-	}
 	
-	public String[] representar() {
-		String[] representacion=new String[numProfesores];
-		for (int i=0;i<numProfesores;i++) {
-			representacion[i]=profesores[i].toString();			
+	public List<String> representar() {
+		List <String> representacion=new ArrayList<>();
+		for (Profesor profesor: profesores) {
+			representacion.add(profesor.toString());		
 		}
 		return representacion;
 	}
