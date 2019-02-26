@@ -1,17 +1,17 @@
 package org.iesalandalus.programacion.reservasaulas.modelo.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.reservasaulas.modelo.dominio.Aula;
 
 public class Aulas {
-	private static final int MAX_AULAS=20;
-	private Aula[] aulas;
-	private int numAulas;
+	private List<Aula>aulas;
 	
 	public Aulas() {
-		aulas=new Aula[MAX_AULAS];
-		numAulas=0;
+		aulas=new ArrayList<Aula>();
 	}
 	
 	public Aulas(Aulas otrasAulas) {
@@ -26,99 +26,56 @@ public class Aulas {
 		
 	}
 	
-	private Aula[] copiaProfundaAulas(Aula[] aulas) {
-		Aula[] otrasAulas=new Aula[MAX_AULAS];
-		for (int i=0;i<MAX_AULAS && aulas[i]!=null ;i++) {
-			otrasAulas[i]=new Aula(aulas[i]);
+	private List<Aula> copiaProfundaAulas(List<Aula> aulas) {
+		List<Aula> otrasAulas = new ArrayList<>();
+		for (Aula aula: aulas) {
+			otrasAulas.add(new Aula(aula));
 		}
 		return otrasAulas;
 	}
+	
 
-	public Aula[] getAulas() {
+
+	public List<Aula> getAulas() {
 		return copiaProfundaAulas(aulas);
 	}
 
 	public int getNumAulas() {
-		return numAulas;
+		return aulas.size();
 	}
 	
 	public void insertar(Aula aula) throws OperationNotSupportedException {
 		if (aula==null)
 			throw new IllegalArgumentException ("No se puede insertar un aula nula.");
-		int indice = buscarIndiceAula(aula);
-		if (!indiceNoSuperaTamano(indice)) {
-			aulas[indice] = aula;
-			numAulas++;
-		} else {
-			if (indiceNoSuperaCapacidad(indice)) {
-				throw new OperationNotSupportedException("El aula ya existe.");
-			} else {
-				throw new OperationNotSupportedException("No se aceptan más aulas.");
-			}
+		if (aulas.contains(aula)) {
+			throw new OperationNotSupportedException("El aula ya existe.");
 		}
-	}
-		
-	
-	private int buscarIndiceAula(Aula aula) {
-		int indice=0;
-		boolean aulaEncontrada = false;
-		while (indiceNoSuperaTamano(indice) && !aulaEncontrada) {
-			if (aulas[indice].equals(aula)) {
-				aulaEncontrada = true;
-			} else {
-				indice++;
-			}
-		}
-		return indice;
+		aulas.add(new Aula(aula));
 	}
 	
-	private boolean indiceNoSuperaTamano(int indice) {
-		return indice<numAulas;
-	}
-	
-	private boolean indiceNoSuperaCapacidad(int indice) throws OperationNotSupportedException {
-		return indice<MAX_AULAS;
-	}
-
-	
-	public Aula buscar(Aula aula) {
-		int indice = 0;
-		indice = buscarIndiceAula(aula);
-		if (indiceNoSuperaTamano(indice)) {
-			return aulas[indice];
+	public Aula buscar(Aula aula) { 
+		int indice = aulas.indexOf(aula);
+		if (indice != -1) {
+			return new Aula(aulas.get(indice));
 		} else {
 			return null;
-		}			
+		}
 	}
 	
 	public void borrar(Aula aula) throws OperationNotSupportedException {
-		if (aula==null)
-			throw new IllegalArgumentException ("No se puede borrar un aula nula.");
-		
-		int indice = buscarIndiceAula(aula);
-		if (indiceNoSuperaTamano(indice)) {
-			desplazarUnaPosicionHaciaIzquierda(indice);
+		if (aula == null) {
+			throw new IllegalArgumentException("No se puede borrar un aula nula.");
 		}
-		else {
+		if (!aulas.remove(aula)) {
 			throw new OperationNotSupportedException("El aula a borrar no existe.");
 		}
 	}
 	
-	private void desplazarUnaPosicionHaciaIzquierda(int indice) {
-		for (int i = indice; i < numAulas - 1; i++) {
-			aulas[i] = aulas[i+1];
-		}
-		aulas[numAulas] = null;
-		numAulas--;
-	}
-	
-	public String[] representar() {
-		String[] representacion=new String[numAulas];
-		for (int i=0;indiceNoSuperaTamano(i);i++) {
-			representacion[i]=aulas[i].toString();			
+	public List<String> representar() {
+		List <String> representacion=new ArrayList<>();
+		for (Aula aula : aulas) {
+			representacion.add(aula.toString());
 		}
 		return representacion;
 	}
-	
-
 }

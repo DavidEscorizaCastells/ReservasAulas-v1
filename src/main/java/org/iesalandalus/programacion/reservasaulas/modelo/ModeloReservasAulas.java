@@ -1,5 +1,7 @@
 package org.iesalandalus.programacion.reservasaulas.modelo;
 
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.reservasaulas.modelo.dao.Aulas;
@@ -21,7 +23,7 @@ public class ModeloReservasAulas {
 		reservas=new Reservas();
 	}
 	
-	public Aula[] getAulas() {
+	public List<Aula> getAulas() {
 		return aulas.getAulas();
 	}
 	
@@ -29,7 +31,7 @@ public class ModeloReservasAulas {
 		return aulas.getNumAulas();
 	}
 	
-	public String[] representarAulas() {
+	public List<String> representarAulas() {
 		return aulas.representar();
 	}
 	
