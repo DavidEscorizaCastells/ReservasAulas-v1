@@ -123,7 +123,7 @@ public enum Opcion {
 		if (esOrdinalValido(ordinal))
 			return values()[ordinal];
 		else
-			throw new IllegalArgumentException("Ordinal de la opciÛn no v·lido");
+			throw new IllegalArgumentException("Ordinal de la opci√≥n no v√°lido");
 	}
 	
 	public static boolean esOrdinalValido(int ordinal) {

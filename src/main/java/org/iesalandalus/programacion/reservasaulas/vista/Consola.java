@@ -14,7 +14,7 @@ public class Consola {
 	private Consola() {}
 	
 	public static void mostrarMenu() {
-		mostrarCabecera("Gestión de reservas");
+		mostrarCabecera("GestiÃ³n de reservas");
 		for (Opcion opcion: Opcion.values()) {
 			System.out.println(opcion);
 		}
@@ -29,7 +29,7 @@ public class Consola {
 	public static int elegirOpcion() {
 		int ordinalOpcion;
 		do {
-			System.out.print("\nElige una opción: ");
+			System.out.print("\nElige una opciÃ³n: ");
 			ordinalOpcion = Entrada.entero();
 		} while (!Opcion.esOrdinalValido(ordinalOpcion));
 		return ordinalOpcion;
@@ -48,7 +48,7 @@ public class Consola {
 		String nombre=leerNombreProfesor();
 		System.out.print("Introduce correo del profesor: ");
 		String correo=Entrada.cadena();
-		System.out.print("Introduce teléfono del profesor (si tiene): ");
+		System.out.print("Introduce telÃ©fono del profesor (si tiene): ");
 		String telefono=Entrada.cadena();
 		if (telefono.trim().equals(""))
 			return new Profesor(nombre, correo);
@@ -64,11 +64,11 @@ public class Consola {
 	public static Tramo leerTramo() {
 		String tramo;
 		do {
-		System.out.print("Selecciona mañana o tarde: ");
+		System.out.print("Selecciona maÃ±ana o tarde: ");
 		tramo = Entrada.cadena();
-		} while (!tramo.toLowerCase().equals("mañana")|| !tramo.toLowerCase().equals("tarde"));
+		} while (!tramo.toLowerCase().equals("maÃ±ana") && !tramo.toLowerCase().equals("tarde"));
 		
-		if (tramo.equalsIgnoreCase("mañana"))
+		if (tramo.equalsIgnoreCase("maÃ±ana"))
 			return Tramo.MANANA;
 		else
 			return Tramo.TARDE;		
@@ -78,7 +78,7 @@ public class Consola {
 		int year, mes, dia;
 		
 		do {
-			System.out.print("Indroduce año: ");
+			System.out.print("Indroduce aÃ±o: ");
 			year=Entrada.entero();
 		} while (year<2019);
 		
@@ -103,10 +103,10 @@ public class Consola {
 		}
 		
 		do {
-			System.out.println("Introduce dia válido para el mes: ");
+			System.out.println("Introduce dia vÃ¡lido para el mes: ");
 			dia=Entrada.entero();
 		} while (dia<1 || dia>mayorDia);
 	
-		return LocalDate.of(dia, mes, year);
+		return LocalDate.of(year, mes, dia);
 	}	
 }

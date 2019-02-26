@@ -1,6 +1,7 @@
 package org.iesalandalus.programacion.reservasaulas.vista;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -23,7 +24,7 @@ public class IUTextual {
 	}
 	
 	public void comenzar(){
-		Consola.mostrarCabecera("Programa para gestion de reservas.");
+		Consola.mostrarCabecera("Programa para gestiÃ³n de reservas.");
 		int ordinalOpcion;
 		do {
 			Consola.mostrarMenu();
@@ -68,7 +69,7 @@ public class IUTextual {
 			if (aula != null) {
 				System.out.println("El aula buscada es: " + aula.toString());
 			} else {
-				System.out.println("No existe ningún aula con ese nombre.");
+				System.out.println("No existe ningÃºn aula con ese nombre.");
 			}
 		} catch (IllegalArgumentException e) {
 			System.out.println(ERROR + e.getMessage());
@@ -76,8 +77,8 @@ public class IUTextual {
 	}
 	public void listarAulas() {
 		Consola.mostrarCabecera("Listar aulas");
-		String[] listaAulas = modelo.representarAulas();
-		if (listaAulas[0]!=null) {
+		List<String> listaAulas = modelo.representarAulas();
+		if (!listaAulas.isEmpty()) {
 			for (String aula : listaAulas) {
 				System.out.println(aula);
 			}
@@ -117,7 +118,7 @@ public class IUTextual {
 			if (profesor != null) {
 				System.out.println("El profesor buscada es: " + profesor.toString());
 			} else {
-				System.out.println("No existe ningún profesor con ese nombre.");
+				System.out.println("No existe ningÃºn profesor con ese nombre.");
 			}
 		} catch (IllegalArgumentException e) {
 			System.out.println(ERROR + e.getMessage());
@@ -125,8 +126,8 @@ public class IUTextual {
 	}
 	public void listarProfesores() {
 		Consola.mostrarCabecera("Listar profesores");
-		String[] listaProfesores = modelo.representarProfesores();
-		if (listaProfesores[0]!=null) {
+		List<String> listaProfesores = modelo.representarProfesores();
+		if (!listaProfesores.isEmpty()) {
 			for (String profesor : listaProfesores) {
 				System.out.println(profesor);
 			}
@@ -174,8 +175,8 @@ public class IUTextual {
 	
 	public void listarReservas() {
 		Consola.mostrarCabecera("Listar reservas");
-		String[] listaReservas = modelo.representarReservas();
-		if (listaReservas[0]!=null) {
+		List<String> listaReservas = modelo.representarReservas();
+		if (!listaReservas.isEmpty()) {
 			for (String reserva : listaReservas) {
 				System.out.println(reserva);
 			}
@@ -186,8 +187,8 @@ public class IUTextual {
 	
 	public void listarReservasAula() {
 		Consola.mostrarCabecera("Listar reservas por aula");		
-		Reserva[] listaReservas = modelo.getReservasAula(Consola.leerAula());
-		if (listaReservas[0]!=null) {
+		List<Reserva> listaReservas = modelo.getReservasAula(Consola.leerAula());
+		if (!listaReservas.isEmpty()) {
 			for (Reserva reserva : listaReservas) {
 				System.out.println(reserva.toString());
 			}
@@ -198,8 +199,8 @@ public class IUTextual {
 	
 	public void listarReservasProfesor() {
 		Consola.mostrarCabecera("Listar reservas por profesor");		
-		Reserva[] listaReservas = modelo.getReservaProfesor(Consola.leerProfesor());
-		if (listaReservas[0]!=null) {
+		List<Reserva> listaReservas = modelo.getReservaProfesor(Consola.leerProfesor());
+		if (!listaReservas.isEmpty()) {
 			for (Reserva reserva : listaReservas) {
 				System.out.println(reserva.toString());
 			}
@@ -213,8 +214,8 @@ public class IUTextual {
 		LocalDate dia=Consola.leerDia();
 		Tramo tramo=Consola.leerTramo();
 		Permanencia permanencia=new Permanencia(dia, tramo);
-		Reserva[] listaReservas = modelo.getReservaPermanencia(permanencia);
-		if (listaReservas[0]!=null) {
+		List<Reserva> listaReservas = modelo.getReservaPermanencia(permanencia);
+		if (!listaReservas.isEmpty()) {
 			for (Reserva reserva : listaReservas) {
 				System.out.println(reserva.toString());
 			}
